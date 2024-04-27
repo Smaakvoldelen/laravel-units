@@ -37,6 +37,11 @@ interface UnitOfMeasurement
     public function convertToBaseValue(float $value): float;
 
     /**
+     * Get the symbol of the unit.
+     */
+    public function getSymbol(): string;
+
+    /**
      * Get the translated value of the unit.
      */
     public function getValueTranslated(): string;

@@ -14,6 +14,7 @@ class UnitsServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('laravel-units')
-            ->hasConfigFile();
+            ->hasConfigFile()
+            ->hasTranslations();
     }
 }

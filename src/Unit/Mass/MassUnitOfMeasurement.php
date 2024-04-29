@@ -2,6 +2,7 @@
 
 namespace Smaakvoldelen\Units\Unit\Mass;
 
+use InvalidArgumentException;
 use Smaakvoldelen\Units\Contracts\UnitOfMeasurement;
 use Smaakvoldelen\Units\Unit\Concerns\ConvertsWithFactor;
 use Smaakvoldelen\Units\Unit\Concerns\HasValues;
@@ -10,54 +11,91 @@ enum MassUnitOfMeasurement: string implements UnitOfMeasurement
 {
     use ConvertsWithFactor, HasValues;
 
-    // Metric - Gram
-    case ATTO_GRAM = 'attogram';
-    case CENTIGRAM = 'centigram';
-    case DECA_GRAM = 'decagram';
-    case DECI_GRAM = 'decigram';
-    case MILLIGRAM = 'milligram';
-    case GRAM = 'gram';
-    case KILOGRAM = 'kilogram';
+    // Metric - Sorted by conversion factor descending
+    case YOTTA_GRAM = 'yottagram';
+    case ZETTA_GRAM = 'zettagram';
     case EXA_GRAM = 'exagram';
-    case FEMTO_GRAM = 'femtogram';
+    case PETA_GRAM = 'petagram';
+    case TERA_GRAM = 'teragram';
     case GIGAGRAM = 'gigagram';
-    case HECTOGRAM = 'hectogram';
     case MEGAGRAM = 'megagram';
     case TONNE = 'tonne';
+    case KILOGRAM = 'kilogram';
+    case HECTOGRAM = 'hectogram';
+    case DECA_GRAM = 'decagram';
+    case GRAM = 'gram';
+    case DECI_GRAM = 'decigram';
+    case CENTIGRAM = 'centigram';
+    case MILLIGRAM = 'milligram';
     case MICRO_GRAM = 'microgram';
     case NANO_GRAM = 'nanogram';
-    case PETA_GRAM = 'petagram';
     case PICO_GRAM = 'picogram';
-    case TERA_GRAM = 'teragram';
-    case YOCTO_GRAM = 'yoctogram';
-    case YOTTA_GRAM = 'yottagram';
+    case FEMTO_GRAM = 'femtogram';
+    case ATTO_GRAM = 'attogram';
     case ZEPTO_GRAM = 'zeptogram';
-    case ZETTA_GRAM = 'zettagram';
+    case YOCTO_GRAM = 'yoctogram';
 
-    // Imperial - Pound
-    case DRAM = 'dram';
-    case POUND = 'pound';
-    case GRAIN = 'grain';
-    case OUNCE = 'ounce';
-    case QUARTER = 'quarter';
-    case SHORT_TON = 'short_tone';
+    // Imperial - Pound - Sorted by conversion factor descending
     case LONG_TON = 'long_ton';
+    case SHORT_TON = 'short_tone';
+    case QUARTER = 'quarter';
     case STONE = 'stone';
+    case POUND = 'pound';
+    case OUNCE = 'ounce';
+    case DRAM = 'dram';
+    case GRAIN = 'grain';
 
-    // Imperial - Troy ounce
-    case PENNY_WEIGHT = 'pennyweight';
-    case TROY_OUNCE = 'troy_ounce';
+    // Imperial - Troy ounce - Sorted by conversion factor descending
     case TROY_POUND = 'troy_pound';
+    case TROY_OUNCE = 'troy_ounce';
+    case PENNY_WEIGHT = 'pennyweight';
 
     public static function alias(string $aliasName): UnitOfMeasurement
     {
-        // TODO: Implement alias() method.
+        $normalizedAlias = strtolower(str_replace(' ', '', $aliasName));
+
+        return match ($normalizedAlias) {
+            'ag', 'attogram', 'attograms' => self::ATTO_GRAM,
+            'cg', 'centigram', 'centigrams' => self::CENTIGRAM,
+            'dag', 'decagram', 'decagrams' => self::DECA_GRAM,
+            'dg', 'decigram', 'decigrams' => self::DECI_GRAM,
+            'mg', 'milligram', 'milligrams' => self::MILLIGRAM,
+            'g', 'gram', 'grams' => self::GRAM,
+            'kg', 'kilogram', 'kilograms' => self::KILOGRAM,
+            'eg', 'exagram', 'exagrams' => self::EXA_GRAM,
+            'fg', 'femtogram', 'femtograms' => self::FEMTO_GRAM,
+            'gg', 'gigagram', 'gigagrams' => self::GIGAGRAM,
+            'hg', 'hectogram', 'hectograms' => self::HECTOGRAM,
+            'meg', 'megagram', 'megagrams' => self::MEGAGRAM,
+            'tonne', 'metricton', 'metrictons' => self::TONNE,
+            'μg', 'microgram', 'micrograms' => self::MICRO_GRAM,
+            'ng', 'nanogram', 'nanograms' => self::NANO_GRAM,
+            'pg', 'petagram', 'petagrams' => self::PETA_GRAM,
+            'picog', 'picogram', 'picograms' => self::PICO_GRAM,
+            'tg', 'teragram', 'teragrams' => self::TERA_GRAM,
+            'yg', 'yoctogram', 'yoctograms' => self::YOCTO_GRAM,
+            'yottag', 'yottagram', 'yottagrams' => self::YOTTA_GRAM,
+            'zg', 'zeptogram', 'zeptograms' => self::ZEPTO_GRAM,
+            'zettag', 'zettagram', 'zettagrams' => self::ZETTA_GRAM,
+            'lb', 'pound', 'pounds' => self::POUND,
+            'dr', 'dram', 'drams' => self::DRAM,
+            'gr', 'grain', 'grains' => self::GRAIN,
+            'oz', 'ounce', 'ounces' => self::OUNCE,
+            'qr', 'quarter', 'quarters' => self::QUARTER,
+            'st', 'stone', 'stones' => self::STONE,
+            'stton', 'shortton', 'shorttons' => self::SHORT_TON,
+            'longton', 'longtons' => self::LONG_TON,
+            'dwt', 'pennyweight', 'pennyweights' => self::PENNY_WEIGHT,
+            'ozt', 'troyounce', 'troyounces' => self::TROY_OUNCE,
+            'lbt', 'troypound', 'troypounds' => self::TROY_POUND,
+            default => throw new InvalidArgumentException("Alias '$aliasName' not recognized.")
+        };
     }
 
     public function conversionFactor(): float
     {
         return match ($this) {
-            // Metric - Gram
+            // Metric - Gram  - Sorted by conversion factor descending
             self::YOTTA_GRAM => 1E24,
             self::ZETTA_GRAM => 1E21,
             self::EXA_GRAM => 1E18,
@@ -79,7 +117,8 @@ enum MassUnitOfMeasurement: string implements UnitOfMeasurement
             self::ATTO_GRAM => 1E-18,
             self::ZEPTO_GRAM => 1E-21,
             self::YOCTO_GRAM => 1E-24,
-            // Imperial - Pound
+
+            // Imperial - Pound  - Sorted by conversion factor descending
             self::LONG_TON => 453.59237 * 2240,
             self::SHORT_TON => 453.59237 * 2000,
             self::QUARTER => 453.59237 * 28,
@@ -88,51 +127,54 @@ enum MassUnitOfMeasurement: string implements UnitOfMeasurement
             self::OUNCE => 453.59237 * (1 / 16),
             self::DRAM => 453.59237 * (1 / 256),
             self::GRAIN => 453.59237 * (1 / 7000),
-            // Imperial - Troy ounce
-            self::TROY_OUNCE => 31.1034768,
+
+            // Imperial - Troy ounce - Sorted by conversion factor descending
             self::TROY_POUND => 31.1034768 * 12,
-            self::PENNY_WEIGHT => 31.1034768 * (1/20),
+            self::TROY_OUNCE => 31.1034768,
+            self::PENNY_WEIGHT => 31.1034768 * (1 / 20),
         };
     }
 
     public function getSymbol(): string
     {
         return match ($this) {
-            // Metric - Gram
-            self::ATTO_GRAM => 'ag',
-            self::CENTIGRAM => 'cg',
-            self::DECA_GRAM => 'dag',
-            self::DECI_GRAM => 'dg',
-            self::MILLIGRAM => 'mg',
-            self::GRAM => 'g',
-            self::KILOGRAM => 'kg',
+            // Metric - Sorted by conversion factor descending
+            self::YOTTA_GRAM => 'Yg',
+            self::ZETTA_GRAM => 'Zg',
             self::EXA_GRAM => 'eG',
-            self::FEMTO_GRAM => 'fg',
+            self::PETA_GRAM => 'Pg',
+            self::TERA_GRAM => 'Tg',
             self::GIGAGRAM => 'Gg',
-            self::HECTOGRAM => 'hg',
             self::MEGAGRAM => 'Mg',
             self::TONNE => 'tonne',
+            self::KILOGRAM => 'kg',
+            self::HECTOGRAM => 'hg',
+            self::DECA_GRAM => 'dag',
+            self::GRAM => 'g',
+            self::DECI_GRAM => 'dg',
+            self::CENTIGRAM => 'cg',
+            self::MILLIGRAM => 'mg',
             self::MICRO_GRAM => 'μg',
             self::NANO_GRAM => 'ng',
-            self::PETA_GRAM => 'Pg',
             self::PICO_GRAM => 'pg',
-            self::TERA_GRAM => 'Tg',
-            self::YOCTO_GRAM => 'yg',
-            self::YOTTA_GRAM => 'Yg',
+            self::FEMTO_GRAM => 'fg',
+            self::ATTO_GRAM => 'ag',
             self::ZEPTO_GRAM => 'zg',
-            self::ZETTA_GRAM => 'Zg',
-            // Imperial - Pound
-            self::POUND => 'lb',
-            self::DRAM => 'dr',
-            self::GRAIN => 'gr',
-            self::OUNCE => 'oz',
+            self::YOCTO_GRAM => 'yg',
+
+            // Imperial - Pound - Sorted by conversion factor descending
+            self::LONG_TON, self::SHORT_TON => '',
             self::QUARTER => 'qr',
             self::STONE => 'st',
-            // Imperial - Troy ounce
-            self::PENNY_WEIGHT => 'dwt',
-            self::TROY_OUNCE => 'oz t',
+            self::POUND => 'lb',
+            self::OUNCE => 'oz',
+            self::DRAM => 'dr',
+            self::GRAIN => 'gr',
+
+            // Imperial - Troy ounce - Sorted by conversion factor descending
             self::TROY_POUND => 'lb t',
-            self::SHORT_TON, self::LONG_TON => '',
+            self::TROY_OUNCE => 'oz t',
+            self::PENNY_WEIGHT => 'dwt',
         };
     }
 }

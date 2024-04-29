@@ -20,7 +20,7 @@ trait HasValues
     public static function getAllValuesTranslated(): Collection
     {
         return collect(self::cases())
-            ->mapWithKeys(fn($case, $key) => [$case->value => $case->valueTranslated()]);
+            ->mapWithKeys(fn ($case, $key) => [$case->value => $case->valueTranslated()]);
     }
 
     /**
@@ -28,6 +28,6 @@ trait HasValues
      */
     public function getValueTranslated(): string
     {
-        return __('laravel-units::units.' . $this->value);
+        return __('laravel-units::units.'.$this->value);
     }
 }

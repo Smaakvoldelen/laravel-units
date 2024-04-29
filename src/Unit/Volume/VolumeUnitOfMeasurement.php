@@ -92,6 +92,9 @@ enum VolumeUnitOfMeasurement: string implements UnitOfMeasurement
     case DRY_QUART = 'dry_quart';
     case DRY_PINT = 'dry_pint';
 
+    /**
+     * Get the unit by the given alias name.
+     */
     public static function alias(string $aliasName): UnitOfMeasurement
     {
         $normalizedAlias = strtolower(str_replace(' ', '', $aliasName));
@@ -182,6 +185,9 @@ enum VolumeUnitOfMeasurement: string implements UnitOfMeasurement
         };
     }
 
+    /**
+     * Get the conversion factor.
+     */
     public function conversionFactor(): float
     {
         return match ($this) {
@@ -268,6 +274,9 @@ enum VolumeUnitOfMeasurement: string implements UnitOfMeasurement
         };
     }
 
+    /**
+     * Get the symbol of the unit.
+     */
     public function getSymbol(): string
     {
         return match ($this) {

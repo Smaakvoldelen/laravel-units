@@ -50,6 +50,9 @@ enum MassUnitOfMeasurement: string implements UnitOfMeasurement
     case TROY_OUNCE = 'troy_ounce';
     case PENNY_WEIGHT = 'pennyweight';
 
+    /**
+     * Get the unit by the given alias name.
+     */
     public static function alias(string $aliasName): UnitOfMeasurement
     {
         $normalizedAlias = strtolower(str_replace(' ', '', $aliasName));
@@ -92,6 +95,9 @@ enum MassUnitOfMeasurement: string implements UnitOfMeasurement
         };
     }
 
+    /**
+     * Get the conversion factor.
+     */
     public function conversionFactor(): float
     {
         return match ($this) {
@@ -135,6 +141,9 @@ enum MassUnitOfMeasurement: string implements UnitOfMeasurement
         };
     }
 
+    /**
+     * Get the symbol of the unit.
+     */
     public function getSymbol(): string
     {
         return match ($this) {

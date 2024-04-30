@@ -2,6 +2,7 @@
 
 namespace Smaakvoldelen\Units\Unit\Amount;
 
+use InvalidArgumentException;
 use Smaakvoldelen\Units\Contracts\UnitOfMeasurement;
 use Smaakvoldelen\Units\Unit\Concerns\ConvertsWithFactor;
 use Smaakvoldelen\Units\Unit\Concerns\HasValues;
@@ -18,6 +19,7 @@ enum AmountUnitOfMeasurement: string implements UnitOfMeasurement
 
         return match ($normalizedAlias) {
             'amount', 'amounts', 'pcs', 'piece', 'pieces', 'qty', 'quantity', 'quantities' => self::QUANTITY,
+            default => throw new InvalidArgumentException("Alias '$aliasName' not recognized.")
         };
     }
 

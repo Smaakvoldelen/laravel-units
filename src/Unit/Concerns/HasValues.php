@@ -20,7 +20,7 @@ trait HasValues
     public static function getAllValuesTranslated(): Collection
     {
         return collect(self::cases())
-            ->mapWithKeys(fn ($case, $key) => [$case->value => $case->valueTranslated()]);
+            ->mapWithKeys(fn (self $case, string $key) => [$case->value => $case->getValueTranslated()]);
     }
 
     /**

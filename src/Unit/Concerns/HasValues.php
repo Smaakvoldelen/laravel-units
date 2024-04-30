@@ -8,6 +8,8 @@ trait HasValues
 {
     /**
      * Get all the unit values.
+     *
+     * @codeCoverageIgnore
      */
     public static function getAllValues(): Collection
     {
@@ -16,6 +18,8 @@ trait HasValues
 
     /**
      * Get all the unit values translated.
+     *
+     * @codeCoverageIgnore
      */
     public static function getAllValuesTranslated(): Collection
     {

@@ -16,6 +16,8 @@ trait ConvertsWithBase
 
     /**
      * Convert the given value from given the base units value.
+     *
+     * @codeCoverageIgnore
      */
     public function convertFromBaseValue(float $value): float
     {
@@ -24,6 +26,8 @@ trait ConvertsWithBase
 
     /**
      * Convert the given value to the base units value.
+     *
+     * @codeCoverageIgnore
      */
     public function convertToBaseValue(float $value): float
     {

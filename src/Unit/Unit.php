@@ -218,7 +218,7 @@ abstract class Unit implements Arrayable, Jsonable, JsonSerializable
     {
         $modes = [self::ROUND_HALF_UP, self::ROUND_HALF_DOWN, self::ROUND_HALF_EVEN, self::ROUND_HALF_ODD];
         if (! in_array($mode, $modes)) {
-            throw new OutOfBoundsException('Rounding mode should be '.implode(' | ', $modes));
+            throw new OutOfBoundsException('Rounding mode should be '.implode('|', $modes));
         }
     }
 }

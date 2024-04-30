@@ -27,9 +27,33 @@ php artisan vendor:publish --tag="laravel-units-config"
 
 ## Usage
 
+### Basic usage
 ```php
-$units = new Smaakvoldelen\Units();
-echo $units->echoPhrase('Hello, Smaakvoldelen!');
+$unit = \Smaakvoldelen\Units\Facades\Units::from('1000 g');
+echo $unit->toKg(); // 1000 g = 1 kg
+echo $unit->toKilogram(); // 1000 g = 1 kg
+echo $unit->toKilograms(); // 1000 g = 1 kg
+```
+
+### Eloquent casts
+
+It's possible to cast a model attribute using a measure, depending on the framework version there are two ways to cast
+model attributes.
+
+```php
+class Product extends \Illuminate\Database\Eloquent\Model {
+    // Laravel 10 and below casts protected
+    protected $casts = [
+        'unit' => \Smaakvoldelen\Units\Unit\Unit::class
+    ];
+
+    // Laravel 11 casts method
+    protected function casts(){
+        return = [
+            'unit' => \Smaakvoldelen\Units\Unit\Unit::class
+        ];
+    }
+}
 ```
 
 ## Testing

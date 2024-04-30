@@ -28,6 +28,6 @@ trait HasValues
      */
     public function getValueTranslated(): string
     {
-        return __('laravel-units::units.'.$this->value);
+        return __('units::units.'.$this->value);
     }
 }

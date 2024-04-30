@@ -45,6 +45,9 @@ abstract class Unit
         $expression = Str::remove((string) $value, $expression);
 
         $unit = static::detectUnitOfMeasurement($expression);
+        if ($unit === null) {
+            throw new BadMethodCallException('Invalid unit.');
+        }
 
         return [(float) $value, $unit];
     }
@@ -52,7 +55,7 @@ abstract class Unit
     /**
      * Detect the unit of measurement from the given expression.
      */
-    public static function detectUnitOfMeasurement(string $expression): UnitOfMeasurement
+    public static function detectUnitOfMeasurement(string $expression): ?UnitOfMeasurement
     {
         $unit = null;
         if (! empty($expression)) {
@@ -65,14 +68,14 @@ abstract class Unit
             $unit = $unitClass::tryFrom($expression);
 
             if (! $unit) {
-                /** @var UnitOfMeasurement $unitClass */
+                /** @var UnitOfMeasurement|null $unitClass */
                 $unitClass = static::$unitOfMeasurementClass;
 
                 $unit = $unitClass::alias($expression);
             }
         }
 
-        /** @var UnitOfMeasurement $unit */
+        /** @var UnitOfMeasurement|null $unit */
         return $unit;
     }
 
@@ -100,7 +103,7 @@ abstract class Unit
      */
     public function __toString(): string
     {
-        return trim($this->value.' '.$this->unitOfMeasurement->getValueTranslated());
+        return trim($this->value.' '.$this->unitOfMeasurement->getSymbol());
     }
 
     /**
@@ -140,6 +143,10 @@ abstract class Unit
     {
         if (is_string($destination)) {
             $destination = static::detectUnitOfMeasurement($destination);
+        }
+
+        if ($destination === null) {
+            throw new BadMethodCallException('Invalid unit.');
         }
 
         $convertedValue = $this->unitOfMeasurement->convert($this->value, $destination);

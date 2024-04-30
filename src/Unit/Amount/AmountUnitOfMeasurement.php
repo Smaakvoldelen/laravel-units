@@ -21,13 +21,6 @@ enum AmountUnitOfMeasurement: string implements UnitOfMeasurement
         };
     }
 
-    public function conversionFactor(): float
-    {
-        return match ($this) {
-            self::QUANTITY => 1,
-        };
-    }
-
     public function getSymbol(): string
     {
         return match ($this) {

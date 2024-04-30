@@ -5,7 +5,9 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/smaakvoldelen/laravel-units/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/smaakvoldelen/laravel-units/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/smaakvoldelen/laravel-units.svg?style=flat-square)](https://packagist.org/packages/smaakvoldelen/laravel-units)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+This is a Laravel package for representing and converting physical units of measure.
+The utility of this library is in encapsulating physical quantities in such a way that you don't have to keep track of 
+which unit they're represented in.
 
 ## Installation
 
@@ -15,30 +17,10 @@ You can install the package via composer:
 composer require smaakvoldelen/laravel-units
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="laravel-units-migrations"
-php artisan migrate
-```
-
 You can publish the config file with:
 
 ```bash
 php artisan vendor:publish --tag="laravel-units-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-units-views"
 ```
 
 ## Usage

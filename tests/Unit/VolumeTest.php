@@ -9,5 +9,5 @@ it('can be converted to', function (string $from, string $to, string $expected) 
         ->and((string) $unit->to($to))
         ->toBe($expected);
 })->with([
-    ['2 l', 'kl', '0.002 kl'],
+    ['2 l', 'kl', '0.002 kiloliter'],
 ]);

@@ -4,14 +4,16 @@ namespace Smaakvoldelen\Units\Unit;
 
 use BackedEnum;
 use BadMethodCallException;
+use Illuminate\Contracts\Database\Eloquent\Castable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Str;
 use JsonSerializable;
 use OutOfBoundsException;
+use Smaakvoldelen\Units\Casts\UnitCast;
 use Smaakvoldelen\Units\Contracts\UnitOfMeasurement;
 
-abstract class Unit implements Arrayable, Jsonable, JsonSerializable
+abstract class Unit implements Arrayable, Castable, Jsonable, JsonSerializable
 {
     const ROUND_HALF_UP = PHP_ROUND_HALF_UP;
 
@@ -30,6 +32,14 @@ abstract class Unit implements Arrayable, Jsonable, JsonSerializable
      * Keeps track of the real value;
      */
     private float $realValue;
+
+    /**
+     * Get the name of the caster class to use when casting from / to this cast target.
+     */
+    public static function castUsing(array $arguments): string
+    {
+        return UnitCast::class;
+    }
 
     /**
      * Extract the value from the given expression.
@@ -115,7 +125,7 @@ abstract class Unit implements Arrayable, Jsonable, JsonSerializable
      */
     public function __toString(): string
     {
-        return trim($this->value.' '.$this->unitOfMeasurement->getSymbol());
+        return trim($this->value.' '.$this->unitOfMeasurement->getName());
     }
 
     /**

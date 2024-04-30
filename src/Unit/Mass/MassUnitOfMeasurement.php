@@ -142,6 +142,14 @@ enum MassUnitOfMeasurement: string implements UnitOfMeasurement
     }
 
     /**
+     * Get the name of the unit.
+     */
+    public function getName(): string
+    {
+        return $this->value;
+    }
+
+    /**
      * Get the symbol of the unit.
      */
     public function getSymbol(): string

@@ -39,6 +39,6 @@ it('can be converted to json', function () {
         ->toBe($jsonOutput);
 });
 
-it('throws and error when using an invalid rounding mode', function() {
-    $unit = Mass::from('1 kg')->round(1,1,200);
+it('throws and error when using an invalid rounding mode', function () {
+    $unit = Mass::from('1 kg')->round(1, 1, 200);
 })->throws(OutOfBoundsException::class, 'Rounding mode should be 1|2|3|4');

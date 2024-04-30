@@ -79,7 +79,7 @@ it('throws and error when using an invalid rounding mode', function () {
     $unit = Mass::from('1 kg')->round(1, 1, 200);
 })->throws(OutOfBoundsException::class, 'Rounding mode should be 1|2|3|4');
 
-test('castUsing', function() {
-   expect(Unit::castUsing([]))
-   ->toEqual(UnitCast::class);
+test('castUsing', function () {
+    expect(Unit::castUsing([]))
+        ->toEqual(UnitCast::class);
 });

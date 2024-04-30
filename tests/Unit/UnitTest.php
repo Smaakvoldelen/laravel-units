@@ -1,5 +1,6 @@
 <?php
 
+use Smaakvoldelen\Units\Facades\Units;
 use Smaakvoldelen\Units\Unit\Mass\Mass;
 
 it('can be coverted to using a magic method', function () {
@@ -27,7 +28,7 @@ it('can be converted to array', function () {
 });
 
 it('can be converted to json', function () {
-    $unit = Mass::from('1 kg');
+    $unit = Units::from('1 kg');
 
     $jsonOutput = '{"value":1,"symbol":"kg","unit":"kilogram"}';
 
@@ -38,6 +39,38 @@ it('can be converted to json', function () {
         ->toBeString()
         ->toBe($jsonOutput);
 });
+
+it('can be formatted', function ($expression, $result, $resultWithDecimal) {
+    $unit = Units::from($expression);
+
+    expect($unit->format())
+        ->toBeString()
+        ->toBe($result)
+    ->and($unit->format(2))
+    ->toBeString()
+    ->toBe($resultWithDecimal);
+})->with([
+    ['1 kg', '1 kg','1.00 kg'],
+    ['1 c', '1 °C','1.00 °C'],
+    ['1 l', '1 l','1.00 l'],
+    ['1 qty', '1 qty','1.00 qty'],
+]);
+
+it('can be formatted translated',  function ($expression, $result, $resultWithDecimal) {
+    $unit = Units::from($expression);
+
+    expect($unit->formatTranslated())
+        ->toBeString()
+        ->toBe($result)
+        ->and($unit->formatTranslated(2))
+        ->toBeString()
+        ->toBe($resultWithDecimal);
+})->with([
+    ['1 kg', '1 kilogram','1.00 kilogram'],
+    ['1 c', '1 °C','1.00 °C'],
+    ['1 l', '1 liter','1.00 liter'],
+    ['1 qty', '1 piece','1.00 piece'],
+]);
 
 it('throws and error when using an invalid rounding mode', function () {
     $unit = Mass::from('1 kg')->round(1, 1, 200);

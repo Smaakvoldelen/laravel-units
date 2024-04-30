@@ -146,6 +146,43 @@ abstract class Unit implements Arrayable, Castable, Jsonable, JsonSerializable
     }
 
     /**
+     * Format the unit.
+     */
+    public function format(int $precision = 0, string $decimalSeparator = '.', string $thousandsSeparator = ''): string
+    {
+        $suffix = $this->unitOfMeasurement->getSymbol();
+        $value = number_format(
+            $this->value,
+            $precision,
+            $decimalSeparator,
+            $thousandsSeparator
+        );
+
+        return $value.' '.$suffix;
+    }
+
+    /**
+     * Format the unit translated.
+     *
+     * @param int $precision
+     * @param string $decimalSeparator
+     * @param string $thousandsSeparator
+     * @return string
+     */
+    public function formatTranslated(int $precision = 0, string $decimalSeparator = '.', string $thousandsSeparator = ''): string
+    {
+        $suffix = $this->unitOfMeasurement->getValueTranslated();
+        $value = number_format(
+            $this->value,
+            $precision,
+            $decimalSeparator,
+            $thousandsSeparator
+        );
+
+        return $value.' '.$suffix;
+    }
+
+    /**
      * Specify data which should be serialized to JSON.
      */
     public function jsonSerialize(): array

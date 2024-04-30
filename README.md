@@ -1,4 +1,4 @@
-![Unit conversions for Laravel Banner](https://banners.beyondco.de/Unit%20conversions%20for%20Laravel.png?theme=light&packageManager=composer+require&packageName=vendor%2Fmy-awesome-package&pattern=architect&style=style_1&description=Laravel+package+for+representing+and+converting+physical+units+of+measure.&md=1&showWatermark=1&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg)
+![Unit conversions for Laravel Banner](https://banners.beyondco.de/Unit%20conversions%20for%20Laravel.png?theme=light&packageManager=composer+require&packageName=smaakvoldelen%2Flaravel-units&pattern=architect&style=style_1&description=Laravel+package+for+representing+and+converting+physical+units+of+measure.&md=1&showWatermark=1&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg)
 
 # Unit conversions for Laravel
 

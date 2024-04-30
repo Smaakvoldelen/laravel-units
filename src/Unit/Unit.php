@@ -8,10 +8,19 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Str;
 use JsonSerializable;
+use OutOfBoundsException;
 use Smaakvoldelen\Units\Contracts\UnitOfMeasurement;
 
 abstract class Unit implements Arrayable, Jsonable, JsonSerializable
 {
+    const ROUND_HALF_UP = PHP_ROUND_HALF_UP;
+
+    const ROUND_HALF_DOWN = PHP_ROUND_HALF_DOWN;
+
+    const ROUND_HALF_EVEN = PHP_ROUND_HALF_EVEN;
+
+    const ROUND_HALF_ODD = PHP_ROUND_HALF_ODD;
+
     /**
      * The unit of measurement class that will be used by the unit.
      */
@@ -142,6 +151,19 @@ abstract class Unit implements Arrayable, Jsonable, JsonSerializable
         return $this->realValue;
     }
 
+    /**
+     * Round the given value.
+     */
+    public function round(int|float $value, ?int $precision = null, $mode = self::ROUND_HALF_UP): float
+    {
+        $this->assertRoundingMode($mode);
+
+        return round($value, $precision ?? config('units.precision', 4), $mode);
+    }
+
+    /**
+     * Get the unit of measurement class.
+     */
     public function unitOfMeasurementClass(): string
     {
         return static::$unitOfMeasurementClass;
@@ -163,7 +185,7 @@ abstract class Unit implements Arrayable, Jsonable, JsonSerializable
         $convertedValue = $this->unitOfMeasurement->convert($this->value, $destination);
 
         $this->realValue = $convertedValue;
-        $this->value = round($convertedValue, 4); // TODO: Precision should be configurable
+        $this->value = $this->round($convertedValue);
         $this->unitOfMeasurement = $destination;
 
         return $this;
@@ -187,5 +209,16 @@ abstract class Unit implements Arrayable, Jsonable, JsonSerializable
     public function toJson($options = 0): false|string
     {
         return json_encode($this->toArray(), $options);
+    }
+
+    /**
+     * Assert that the given rounding mode is valid.
+     */
+    protected function assertRoundingMode(int $mode): void
+    {
+        $modes = [self::ROUND_HALF_UP, self::ROUND_HALF_DOWN, self::ROUND_HALF_EVEN, self::ROUND_HALF_ODD];
+        if (! in_array($mode, $modes)) {
+            throw new OutOfBoundsException('Rounding mode should be '.implode(' | ', $modes));
+        }
     }
 }

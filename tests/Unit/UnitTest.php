@@ -1,7 +1,9 @@
 <?php
 
+use Smaakvoldelen\Units\Casts\UnitCast;
 use Smaakvoldelen\Units\Facades\Units;
 use Smaakvoldelen\Units\Unit\Mass\Mass;
+use Smaakvoldelen\Units\Unit\Unit;
 
 it('can be coverted to using a magic method', function () {
     $unit = Mass::from('1 kg');
@@ -76,3 +78,8 @@ it('can be formatted translated', function ($expression, $result, $resultWithDec
 it('throws and error when using an invalid rounding mode', function () {
     $unit = Mass::from('1 kg')->round(1, 1, 200);
 })->throws(OutOfBoundsException::class, 'Rounding mode should be 1|2|3|4');
+
+test('castUsing', function() {
+   expect(Unit::castUsing([]))
+   ->toEqual(UnitCast::class);
+});

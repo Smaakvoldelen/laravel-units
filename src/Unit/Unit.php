@@ -4,10 +4,13 @@ namespace Smaakvoldelen\Units\Unit;
 
 use BackedEnum;
 use BadMethodCallException;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Str;
+use JsonSerializable;
 use Smaakvoldelen\Units\Contracts\UnitOfMeasurement;
 
-abstract class Unit
+abstract class Unit implements Arrayable, Jsonable, JsonSerializable
 {
     /**
      * The unit of measurement class that will be used by the unit.
@@ -124,6 +127,14 @@ abstract class Unit
     }
 
     /**
+     * Specify data which should be serialized to JSON.
+     */
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
+    }
+
+    /**
      * Get the real value.
      */
     public function realValue(): float
@@ -156,5 +167,25 @@ abstract class Unit
         $this->unitOfMeasurement = $destination;
 
         return $this;
+    }
+
+    /**
+     * Get the instance as an array.
+     */
+    public function toArray(): array
+    {
+        return [
+            'value' => $this->value,
+            'symbol' => $this->unitOfMeasurement->getSymbol(),
+            'unit' => $this->unitOfMeasurement->getValueTranslated(),
+        ];
+    }
+
+    /**
+     * Convert the object to its JSON representation.
+     */
+    public function toJson($options = 0): false|string
+    {
+        return json_encode($this->toArray(), $options);
     }
 }

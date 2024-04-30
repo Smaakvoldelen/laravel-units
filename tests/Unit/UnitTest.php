@@ -13,3 +13,28 @@ it('can get the real value', function () {
 
     expect($unit->realValue())->toBe(1.0);
 });
+
+it('can be converted to array', function () {
+    $unit = Mass::from('1 kg');
+
+    expect($unit->toArray())
+        ->toBeArray()
+        ->toBe([
+            'value' => 1.0,
+            'symbol' => 'kg',
+            'unit' => 'kilogram',
+        ]);
+});
+
+it('can be converted to json', function () {
+    $unit = Mass::from('1 kg');
+
+    $jsonOutput = '{"value":1,"symbol":"kg","unit":"kilogram"}';
+
+    expect($unit->toJson())
+        ->toBeString()
+        ->toBe($jsonOutput)
+        ->and(json_encode($unit))
+        ->toBeString()
+        ->toBe($jsonOutput);
+});

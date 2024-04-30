@@ -46,17 +46,17 @@ it('can be formatted', function ($expression, $result, $resultWithDecimal) {
     expect($unit->format())
         ->toBeString()
         ->toBe($result)
-    ->and($unit->format(2))
-    ->toBeString()
-    ->toBe($resultWithDecimal);
+        ->and($unit->format(2))
+        ->toBeString()
+        ->toBe($resultWithDecimal);
 })->with([
-    ['1 kg', '1 kg','1.00 kg'],
-    ['1 c', '1 °C','1.00 °C'],
-    ['1 l', '1 l','1.00 l'],
-    ['1 qty', '1 qty','1.00 qty'],
+    ['1 kg', '1 kg', '1.00 kg'],
+    ['1 c', '1 °C', '1.00 °C'],
+    ['1 l', '1 l', '1.00 l'],
+    ['1 qty', '1 qty', '1.00 qty'],
 ]);
 
-it('can be formatted translated',  function ($expression, $result, $resultWithDecimal) {
+it('can be formatted translated', function ($expression, $result, $resultWithDecimal) {
     $unit = Units::from($expression);
 
     expect($unit->formatTranslated())
@@ -66,10 +66,11 @@ it('can be formatted translated',  function ($expression, $result, $resultWithDe
         ->toBeString()
         ->toBe($resultWithDecimal);
 })->with([
-    ['1 kg', '1 kilogram','1.00 kilogram'],
-    ['1 c', '1 °C','1.00 °C'],
-    ['1 l', '1 liter','1.00 liter'],
-    ['1 qty', '1 piece','1.00 piece'],
+    ['1 kg', '1 kilogram', '1.00 kilogram'],
+    ['2 kg', '2 kilograms', '2.00 kilograms'],
+    ['1 c', '1 °C', '1.00 °C'],
+    ['1 l', '1 liter', '1.00 liter'],
+    ['1 qty', '1 piece', '1.00 piece'],
 ]);
 
 it('throws and error when using an invalid rounding mode', function () {

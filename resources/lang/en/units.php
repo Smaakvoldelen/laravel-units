@@ -2,8 +2,8 @@
 
 return [
     'celsius' => '°C',
-    'kilogram' => 'kilogram',
+    'kilogram' => 'kilogram|kilograms',
     'tonne' => 'tonne',
-    'liter' => 'liter',
-    'quantity' => 'piece',
+    'liter' => 'liter|liters',
+    'quantity' => 'piece|pieces',
 ];

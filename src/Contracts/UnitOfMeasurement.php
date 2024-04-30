@@ -49,5 +49,5 @@ interface UnitOfMeasurement
     /**
      * Get the translated value of the unit.
      */
-    public function getValueTranslated(): string;
+    public function getValueTranslated(float $number = 1): string;
 }

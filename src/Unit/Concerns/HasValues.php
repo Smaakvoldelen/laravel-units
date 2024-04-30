@@ -30,8 +30,8 @@ trait HasValues
     /**
      * Get the translated value of the unit.
      */
-    public function getValueTranslated(): string
+    public function getValueTranslated(float $number = 1): string
     {
-        return __('units::units.'.$this->value);
+        return trans_choice('units::units.'.$this->value, $number);
     }
 }

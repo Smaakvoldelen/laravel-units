@@ -49,10 +49,10 @@ enum VolumeUnitOfMeasurement: string implements UnitOfMeasurement
     case DECI_LITER = 'deciliter';
     case CENTILITER = 'centiliter';
     case MILLILITER = 'milliliter';
-    case MICRO_LITER = 'μl';
-    case NANO_LITER = 'nl';
-    case PICO_LITER = 'pl';
-    case FEMTO_LITER = 'fl';
+    case MICRO_LITER = 'microliter';
+    case NANO_LITER = 'nanoliter';
+    case PICO_LITER = 'picoliter';
+    case FEMTO_LITER = 'femtoliter';
     case ATTO_LITER = 'attoliter';
     case ZEPTO_LITER = 'zeptoliter';
     case YOCTO_LITER = 'yoctoliter';
